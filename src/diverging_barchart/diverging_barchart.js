@@ -46,9 +46,7 @@ function main(){
             .append("text")
             .attr("x",xScale(0))
             .attr("y", d=>yScale(d.State)+40)
-            .attr("text-anchor", function(d) {
-                return d.affordability < 0 ? "start" : "end";
-            })
+            .attr("text-anchor", d=> d.affordability < 0 ? "start" : "end")
             .attr("font-family","sans-serif")
             .text(d=> d.State)
 
@@ -61,7 +59,6 @@ function main(){
             .attr("font-size","20px")
             .attr("stroke","black")
             .text("increase/decrease in affordability");
-
 
         container_g.append("g")
             .attr("class", "legendOrdinal")
