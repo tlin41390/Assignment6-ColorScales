@@ -34,6 +34,7 @@ function main(){
         }));
         yScale.domain([0, 100]);
 
+        //create the color scale for the barchart.
         const colorScale = d3.scaleSequential()
             .interpolator(d3.interpolateBlues).domain([0,99])
 
@@ -73,6 +74,7 @@ function main(){
             .attr("stroke", "black")
             .text("Sales in Millions")
 
+        //translate the color scale
         container_g.append("g")
             .attr("class", "legendOrdinal")
             .attr("transform", "translate(400,100)")

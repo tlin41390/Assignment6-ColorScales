@@ -11,7 +11,6 @@ function main(){
     const visualizationHeight = svg.attr("height") - margin;
 
     //text for the canvas of the title
-
     svg.append("text")
         .attr("transform", "translate(100,0)")
         .attr("x",50)
@@ -22,6 +21,7 @@ function main(){
     const xScale = d3.scaleLinear().range([0, visualizationWidth]);
     const yScale = d3.scaleLinear().range([visualizationHeight,0]);
 
+    //different color scales for publishing companies
     const nintendoScale = d3.scaleSequential().interpolator(d3.interpolateReds).domain([0,100])
     const ubisoftScale = d3.scaleSequential().interpolator(d3.interpolateBlues).domain([0,100]);
 
@@ -33,6 +33,7 @@ function main(){
         xScale.domain([30,100]);
         yScale.domain([0,7]);
 
+        //create the tooltip for the plot
         const tooltip = d3.select("body")
             .append("div")
             .style("opacity",0)
@@ -43,6 +44,7 @@ function main(){
             .style("border-radius",5)
             .style("padding","5px")
 
+        //mouseover function for the tooltip
         let mouseover = function(d) {
             tooltip
                 .style("opacity",1)
@@ -51,6 +53,7 @@ function main(){
                 .style("opacity",1)
         }
 
+        //mouseleave action
         let mouseleave = function(d){
             tooltip
                 .style("opacity",0)
@@ -59,6 +62,7 @@ function main(){
                 .style("opacity", 1)
         }
 
+        //append the circles on the graph and see what color scale to use based on the publisher
         container_g.selectAll(".dot")
             .data(data)
             .enter().append("circle")
@@ -66,6 +70,7 @@ function main(){
             .attr("class", "dot")
             .attr("cx", function(d){ return xScale(d.Review_Score); })
             .attr("cy", function(d){ return yScale(d.Sales); })
+            //actions to display and remove tooltip
             .on("mouseover",mouseover)
             .on("mousemove",(Event,d)=>{
                 tooltip
@@ -102,7 +107,7 @@ function main(){
             .attr("stroke", "black")
             .text("Sales in Millions of Dollars for Video Game")
 
-
+        //orient the canvas to the desired location.
         container_g.append("g")
             .attr("class", "nintendo")
             .attr("transform", "translate(600,100)")
@@ -113,6 +118,7 @@ function main(){
             .title("Nintendo")
             .scale(nintendoScale);
 
+        //call the color scales and append them to the canvas
         container_g.select(".nintendo")
             .call(nintendo);
 
@@ -126,6 +132,7 @@ function main(){
             .title("Ubisoft")
             .scale(ubisoftScale);
 
+        //call the ubisoft scale
         container_g.select(".ubisoft")
             .call(ubisoft);
 
