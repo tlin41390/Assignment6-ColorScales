@@ -1,14 +1,14 @@
 function main(){
-    var canvasWidth = 700;
-    var canvasHeight = 700;
-    var margin = 200;
+    const canvasWidth = 700;
+    const canvasHeight = 700;
+    const margin = 200;
 
-    var svg = d3.select("body").append("svg")
+    const svg = d3.select("body").append("svg")
         .attr("width", canvasWidth)
         .attr("height", canvasHeight)
 
-    var width = svg.attr("width") - margin;
-    var height = svg.attr("height") - margin;
+    const width = svg.attr("width") - margin;
+    const height = svg.attr("height") - margin;
 
     //add the text to the canvas for the title
 
@@ -20,10 +20,10 @@ function main(){
         .attr("font-family","sans-serif")
         .text("Total Sales in Millions By Publishing Game Companies")
 
-    var xScale = d3.scaleBand().range([0, width]).padding(0.3);
-    var yScale = d3.scaleLinear().range([height, 0]);
+    const xScale = d3.scaleBand().range([0, width]).padding(0.3);
+    const yScale = d3.scaleLinear().range([height, 0]);
 
-    var container_g = svg.append("g")
+    const container_g = svg.append("g")
         .attr("transform",
             "translate(100,100)");
 

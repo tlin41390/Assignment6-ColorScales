@@ -10,6 +10,7 @@ function main(){
     const width = svg.attr("width") - margin;
     const height = svg.attr("height") - margin;
 
+    //add text to the canvas
     svg.append("text")
         .attr("transform", "translate(100, 0)")
         .attr("x",50)
@@ -24,12 +25,15 @@ function main(){
 
     const xScale =  d3.scaleLinear().range([0,width])
     const yScale = d3.scaleBand().range([height,0]).padding(0.1);
+    //create the diverging colorscale for the graph
     const divergingColor = d3.scaleSequential().interpolator(d3.interpolateRdBu).domain([-15,15]);
 
     d3.csv("https://gist.githubusercontent.com/tlin41390/92417015baa3d4c23303d0a254e0cb4e/raw/0e0b5219220225a9caf57cefc5cafc377784e4a6/states.csv").then(data => {
+
         xScale.domain([-15,15]);
         yScale.domain(data.map(function(d){ return d.State}));
 
+        //append the rectangles to the svg
         container_g.selectAll("rect")
             .data(data)
             .enter()
@@ -40,6 +44,7 @@ function main(){
             .attr("width", d=>Math.abs(xScale(d.affordability)-xScale(0)))
             .style("fill",d=>divergingColor(d.affordability));
 
+        //state text for the labels
         container_g.selectAll("text")
             .data(data)
             .enter()
@@ -50,6 +55,7 @@ function main(){
             .attr("font-family","sans-serif")
             .text(d=> d.State)
 
+        //create the x axis
         container_g.append("g")
             .attr("transform","translate(0 " + height + ")")
             .call(d3.axisBottom(xScale).ticks(18))
@@ -60,6 +66,7 @@ function main(){
             .attr("stroke","black")
             .text("increase/decrease in affordability");
 
+        //move the legend to the right spot
         container_g.append("g")
             .attr("class", "legendOrdinal")
             .attr("transform", "translate(500,100)")
@@ -71,9 +78,6 @@ function main(){
 
         container_g.select(".legendOrdinal")
             .call(legendOrdinal);
-
-
-
     })
 }
 main();
